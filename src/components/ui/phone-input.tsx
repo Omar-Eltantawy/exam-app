@@ -29,26 +29,26 @@ type PhoneInputProps = Omit<
     onChange?: (value: RPNInput.Value) => void;
   };
 
-const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
-  React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, value, ...props }, ref) => {
-      return (
-        <RPNInput.default
-          ref={ref}
-          className={cn("flex", className)}
-          flagComponent={FlagComponent}
-          countrySelectComponent={CountrySelect}
-          inputComponent={InputComponent}
-          smartCaret={false}
-          value={value || undefined}
-          onChange={(value) => {
-            onChange?.(value || ("" as RPNInput.Value));
-          }}
-          {...props}
-        />
-      );
-    }
+const PhoneInput = React.forwardRef<
+  React.ElementRef<typeof RPNInput.default>,
+  PhoneInputProps
+>(({ className, onChange, value, ...props }, ref) => {
+  return (
+    <RPNInput.default
+      ref={ref}
+      className={cn("flex", className)}
+      flagComponent={FlagComponent}
+      countrySelectComponent={CountrySelect}
+      inputComponent={InputComponent}
+      smartCaret={false}
+      value={value || undefined}
+      onChange={(value) => {
+        onChange?.(value || ("" as RPNInput.Value));
+      }}
+      {...props}
+    />
   );
+});
 PhoneInput.displayName = "PhoneInput";
 
 const InputComponent = React.forwardRef<
@@ -84,14 +84,14 @@ const CountrySelect = ({
       modal
       onOpenChange={(open) => {
         setIsOpen(open);
-        open && setSearchValue("");
+        if (open) setSearchValue("");
       }}
     >
       <PopoverTrigger asChild>
         <Button
           type="button"
           variant="outline"
-          className="flex gap-1  px-3 focus:z-10"
+          className="flex gap-1 px-3 focus:z-10"
           disabled={disabled}
         >
           <FlagComponent
@@ -114,12 +114,10 @@ const CountrySelect = ({
               setSearchValue(value);
               setTimeout(() => {
                 if (scrollAreaRef.current) {
-                  const viewportElement = scrollAreaRef.current.querySelector(
+                  const viewport = scrollAreaRef.current.querySelector(
                     "[data-radix-scroll-area-viewport]"
                   );
-                  if (viewportElement) {
-                    viewportElement.scrollTop = 0;
-                  }
+                  if (viewport) viewport.scrollTop = 0;
                 }
               }, 0);
             }}
@@ -186,10 +184,9 @@ const CountrySelectOption = ({
 
 const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
   const Flag = flags[country];
-
   return (
-    <span className="flex h-4 w-6 overflow-hidden  bg-foreground/20 [&_svg:not([class*='size-'])]:size-full">
-      {Flag && <Flag title={countryName} />}
+    <span className="flex h-4 w-6 overflow-hidden bg-foreground/20 [&_svg:not([class*='size-'])]:size-full">
+      {Flag ? <Flag title={countryName} /> : null}
     </span>
   );
 };
