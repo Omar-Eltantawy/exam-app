@@ -1,0 +1,10 @@
+NEXT_PUBLIC_API= "https://exam.elevateegy.com/api/v1"
+
+
+
+NEXTAUTH_SECRET= "1ujZLlGZOlLMzX/Qi+CIHbzjLPoa2M2+Ptg2kV1Rk8U="
+NEXTAUTH_URL= "http://localhost:3000"
+
+
+
+SERVER_API_SECRET="EwC0uyokNmzBU+OXVUphKNDcJqSO+n1hFNjDXM/rn+Q="
