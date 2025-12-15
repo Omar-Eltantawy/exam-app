@@ -10,11 +10,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Control, FieldValues } from "react-hook-form";
+import { Control, FieldValues, Path } from "react-hook-form";
 import { cn } from "@/lib/utils/tailwind-merge";
 
 interface InputFieldProps<T extends FieldValues> {
-  name: string;
+  name: Path<T>;
   control: Control<T>;
   label: string;
   type?: string;
